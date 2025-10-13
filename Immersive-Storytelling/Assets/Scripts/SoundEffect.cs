@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class SoundEffect : MonoBehaviour
 {
@@ -20,11 +21,13 @@ public class SoundEffect : MonoBehaviour
     public void PlaySoundEffect(int amountOfTimes, float speed)
     {
         if (soundClip == null) return;
-        StartCoroutine(PlayRepeated(speed, amountOfTimes)); // Speed still need to fix.
+        StartCoroutine(PlayRepeated(amountOfTimes,speed));
     }
 
-    private IEnumerator PlayRepeated(float speed,int amount = 1)
+    private IEnumerator PlayRepeated(int amount = 1, float speed = 1)
     {
+        audioSource.PlayOneShot(soundClip);
+        audioSource.pitch = speed;
         for (int i = 0; i < amount; i++)
         {
             audioSource.PlayOneShot(soundClip);
