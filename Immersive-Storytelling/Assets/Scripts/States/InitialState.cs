@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class InitialState : State
 {
     private bool _buttonPressed = false;

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class State
 {
     public delegate void EntryDelegate();
