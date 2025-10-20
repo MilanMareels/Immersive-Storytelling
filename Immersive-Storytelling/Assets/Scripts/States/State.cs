@@ -7,11 +7,14 @@ public abstract class State
     public delegate void UpdateDelegate();
     public UpdateDelegate Update;
 
-    protected DirectorScript director;
+    protected DirectorScript _director;
+    protected bool _transition = false;
+    protected State _nextState;
 
-    protected State(DirectorScript director)
+    protected State(DirectorScript director, State nextState)
     {
-        this.director = director;
+        _director = director;
+        _nextState = nextState;
     }
 
     public virtual void OnEntry()
@@ -27,5 +30,16 @@ public abstract class State
     public virtual void OnUpdate()
     {
         Update?.Invoke();
+
+        if (_transition)
+        {
+            _director.SetState(_nextState);
+            _transition = false;
+        }
+    }
+
+    public void Transition()
+    {
+        _transition = true;
     }
 }

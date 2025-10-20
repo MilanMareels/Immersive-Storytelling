@@ -10,16 +10,14 @@ public class DirectorTestEditor : Editor
 
         DirectorScript director = (DirectorScript)target;
 
-        if (GUILayout.Button("Initial"))
+        if (GUILayout.Button("Reset"))
         {
             director.ResetDirector();
         }
 
-        if (GUILayout.Button("DayNight"))
+        if (GUILayout.Button("Next State"))
         {
-            if (director.InitialState is InitialState initState) {
-                initState.OnButtonPress();
-            }
+            director.NextState();
         }
     }
 }

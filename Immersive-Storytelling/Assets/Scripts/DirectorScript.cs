@@ -22,14 +22,14 @@ public class DirectorScript : MonoBehaviour
 
     public DirectorScript()
     {
-        InitialState = new InitialState(this);
-        DayNightState = new DayNightState(this);
-        StartExperienceState = new StartExperienceState(this);
-        TimeLapseState = new TimeLapseState(this);
-        SpaceExperienceState = new SpaceExperienceState(this);
-        SpaceWeirdnessState = new SpaceWeirdnessState(this);
-        EndSpaceState = new EndSpaceState(this);
-        EndExperienceState = new EndExperienceState(this);
+        EndExperienceState = new EndExperienceState(this, InitialState);
+        EndSpaceState = new EndSpaceState(this, EndExperienceState);
+        SpaceWeirdnessState = new SpaceWeirdnessState(this, EndSpaceState);
+        SpaceExperienceState = new SpaceExperienceState(this, SpaceWeirdnessState);
+        TimeLapseState = new TimeLapseState(this, SpaceExperienceState);
+        StartExperienceState = new StartExperienceState(this, TimeLapseState);
+        InitialState = new InitialState(this, StartExperienceState);
+        (EndExperienceState as EndExperienceState).SetNextState(InitialState);
     }
 
     private void Start()
@@ -61,6 +61,11 @@ public class DirectorScript : MonoBehaviour
     public void SetState(State state)
     {
         _currentState = state;
+    }
+
+    public void NextState()
+    {
+        _currentState.Transition();
     }
 
     public void ResetDirector()

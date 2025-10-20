@@ -1,6 +1,6 @@
 public class EndSpaceState : State
 {
-    public EndSpaceState(DirectorScript director) : base(director)
+    public EndSpaceState(DirectorScript director, State nextState) : base(director, nextState)
     {
     }
 }
