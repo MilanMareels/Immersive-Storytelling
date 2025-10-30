@@ -12,13 +12,29 @@ public class AsteroidMovement : MonoBehaviour
     public float swayAmount = 0.5f;
     public float swaySpeed = 2f;
 
+    [Header("Geluid")]
+    public AudioClip fallSound;
+    private AudioSource audioSource;
+
     private Vector2 velocity;
     private float swayOffset;
+    private Camera mainCam;
 
     void Start()
     {
         direction = direction.normalized;
         swayOffset = Random.Range(0f, 2f * Mathf.PI);
+        mainCam = Camera.main;
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        if (fallSound != null)
+        {
+            audioSource.clip = fallSound;
+            audioSource.Play();
+        }
     }
 
     void Update()
