@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Wall_Motion : MonoBehaviour
 {
-    public float scrollSpeedX = 0.1f; // horizontale snelheid
-    public float scrollSpeedY = 0.0f; // verticale snelheid
+    public float scrollSpeedX = 0.1f;
+    public float scrollSpeedY = 0.0f;
 
     private Renderer rend;
 
