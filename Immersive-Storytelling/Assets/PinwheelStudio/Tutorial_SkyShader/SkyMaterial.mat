@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkyMaterial
+  m_Shader: {fileID: 4800000, guid: 3c84f6b087151c943a931cb2d83ba599, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _CloudTex:
+        m_Texture: {fileID: 2800000, guid: 7aab529735c130b43a29a09dbc99b890, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _HorizonExponent: 3
+    - _HorizonThickness: 0.5
+    - _OverheadCloudAltitude: 1000
+    - _OverheadCloudAnimationSpeed: 100
+    - _OverheadCloudFlowDirectionX: 1
+    - _OverheadCloudFlowDirectionZ: 1
+    - _OverheadCloudRemapMax: 1.5
+    - _OverheadCloudRemapMin: -0.5
+    - _OverheadCloudSize: 10
+    - _SunGlow: 0.45
+    - _SunSize: 0.07
+    - _SunSoftEdge: 1
+    m_Colors:
+    - _GroundColor: {r: 0.39999998, g: 0.39999998, b: 0.39999998, a: 1}
+    - _HorizonColor: {r: 1, g: 0.95, b: 0.85, a: 1}
+    - _OverheadCloudColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _SkyColor: {r: 0.34999996, g: 0.54999995, b: 0.75, a: 1}
+    - _SunColor: {r: 1, g: 0.96999997, b: 0.9, a: 1}
+    - _SunDirection: {r: 0, g: -0.7372773, b: 0.67559016, a: 0}
+  m_BuildTextureStacks: []
