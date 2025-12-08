@@ -1,6 +1,6 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
 
 public class DirectorScript : MonoBehaviour
 {
@@ -10,16 +10,28 @@ public class DirectorScript : MonoBehaviour
     public BreakFloorDelegate breakFloorDelegate;
     public State InitialState;
     public State DayNightState;
+    public State StartExperienceState;
+    public State TimeLapseState;
+    public State SpaceExperienceState;
+    public State SpaceWeirdnessState;
+    public State EndSpaceState;
+    public State EndExperienceState;
 
     private State _currentState;
     private State _prevState;
 
     public DirectorScript()
     {
-        InitialState = new InitialState(this);
-        DayNightState = new DayNightState(this);
+        EndExperienceState = new EndExperienceState(this, InitialState);
+        EndSpaceState = new EndSpaceState(this, EndExperienceState);
+        SpaceWeirdnessState = new SpaceWeirdnessState(this, EndSpaceState);
+        SpaceExperienceState = new SpaceExperienceState(this, SpaceWeirdnessState);
+        TimeLapseState = new TimeLapseState(this, SpaceExperienceState);
+        StartExperienceState = new StartExperienceState(this, TimeLapseState);
+        InitialState = new InitialState(this, StartExperienceState);
+        (EndExperienceState as EndExperienceState).SetNextState(InitialState);
     }
-
+         
     private void Start()
     {
         _currentState = InitialState;
@@ -49,6 +61,11 @@ public class DirectorScript : MonoBehaviour
     public void SetState(State state)
     {
         _currentState = state;
+    }
+
+    public void NextState()
+    {
+        _currentState.Transition();
     }
 
     public void ResetDirector()
