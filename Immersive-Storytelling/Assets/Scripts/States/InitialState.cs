@@ -8,6 +8,4 @@ public class InitialState : State
     {
         base.OnUpdate();
     }
-
-
 }

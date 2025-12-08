@@ -31,7 +31,7 @@ public class DirectorScript : MonoBehaviour
         InitialState = new InitialState(this, StartExperienceState);
         (EndExperienceState as EndExperienceState).SetNextState(InitialState);
     }
-
+         
     private void Start()
     {
         _currentState = InitialState;
