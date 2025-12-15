@@ -1,3 +1,6 @@
+using System.Collections;
+using UnityEngine;
+
 public abstract class State
 {
     public delegate void EntryDelegate();
@@ -19,6 +22,7 @@ public abstract class State
 
     public virtual void OnEntry()
     {
+        Debug.Log(GetType());
         Entry?.Invoke();
     }
 

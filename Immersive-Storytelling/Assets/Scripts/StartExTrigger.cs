@@ -3,6 +3,7 @@ using UnityEngine;
 public class StartExTrigger : MonoBehaviour
 {
     public DirectorScript directorScript;
+    private bool _enabled = true;
     
     void Start()
     {
@@ -17,7 +18,10 @@ public class StartExTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!_enabled)
+            return;
         if(other.tag == "Player")
            directorScript.NextState();
+        _enabled = false;
     }
 }

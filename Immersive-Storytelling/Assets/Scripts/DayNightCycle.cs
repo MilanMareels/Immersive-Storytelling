@@ -11,6 +11,10 @@ public class DayNightCycle : MonoBehaviour
     public Material NightSkyboxMaterial;
     private Light sun;
     private bool isDay;
+    public Light StaticLight;
+    public float SpeedUpDelay = 10;
+    public float SlowDownDelay = 10;
+    private float delta = 0f;
 
     private CycleState state = CycleState.Slow;
     private float cycleTransitionDelta = 0f;
@@ -29,6 +33,25 @@ public class DayNightCycle : MonoBehaviour
         rotationSpeed = 360f / DurationDayInitial;
         sun = GetComponent<Light>();
         isDay = true;
+
+        var director = FindFirstObjectByType<DirectorScript>();
+
+        director.TimeLapseState.Entry += () =>
+        {
+            enabled = true;
+            StaticLight.enabled = false;
+        };
+
+        director.TimeLapseState.Update += () =>
+        {
+            delta += Time.deltaTime;
+        };
+
+        director.TimeLapseState.Exit += () =>
+        {
+            enabled = false;
+            StaticLight.enabled = true;
+        };
     }
 
     // Update is called once per frame
@@ -74,6 +97,11 @@ public class DayNightCycle : MonoBehaviour
         float timeFactor = isDay ? Mathf.InverseLerp(0, 180, transform.eulerAngles.x) * 1.5f : 0;
         sun.intensity = timeFactor;
         RenderSettings.reflectionIntensity = timeFactor;
+
+        if (delta > SpeedUpDelay)
+        {
+            StartSpeedUp();
+        }
     }
 
     public void StartSpeedUp()

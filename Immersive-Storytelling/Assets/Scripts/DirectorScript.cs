@@ -8,14 +8,14 @@ public class DirectorScript : MonoBehaviour
     public CycleDelegate cycleDelegate;
     public delegate void BreakFloorDelegate();
     public BreakFloorDelegate breakFloorDelegate;
-    public State InitialState;
+    public InitialState InitialState;
     public State DayNightState;
-    public State StartExperienceState;
-    public State TimeLapseState;
-    public State SpaceExperienceState;
-    public State SpaceWeirdnessState;
-    public State EndSpaceState;
-    public State EndExperienceState;
+    public StartExperienceState StartExperienceState;
+    public TimeLapseState TimeLapseState;
+    public SpaceExperienceState SpaceExperienceState;
+    public SpaceWeirdnessState SpaceWeirdnessState;
+    public EndSpaceState EndSpaceState;
+    public EndExperienceState EndExperienceState;
 
     private State _currentState;
     private State _prevState;
@@ -55,7 +55,7 @@ public class DirectorScript : MonoBehaviour
         {
             _currentState.OnUpdate();
         }
-        Debug.Log(_currentState.GetType());
+        //Debug.Log(_currentState.GetType());
     }
 
     public void SetState(State state)
