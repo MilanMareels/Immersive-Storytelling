@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d02c8e6d914d7e2439f431aab93fe510
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 305877
+  packageName: Realistic Metal Texture
+  packageVersion: 1.0
+  assetPath: Assets/Realistic Metal Texture/Material/SkyBox.mat
+  uploadId: 718941
