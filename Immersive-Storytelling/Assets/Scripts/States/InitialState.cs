@@ -1,11 +1,19 @@
 public class InitialState : State
 {
-    public InitialState(DirectorScript director, State nextState) : base(director, nextState)
+    private readonly SoundEffectManager _sound;
+    public InitialState(DirectorScript director, State nextState, SoundEffectManager sound) : base(director, nextState)
     {
+        _sound = sound;
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
+    }
+
+    public override void OnEntry()
+    {
+        base.OnEntry();
+        _sound.PlaySong("Nature");
     }
 }

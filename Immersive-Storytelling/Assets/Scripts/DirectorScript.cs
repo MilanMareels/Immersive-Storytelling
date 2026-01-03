@@ -20,15 +20,19 @@ public class DirectorScript : MonoBehaviour
     private State _currentState;
     private State _prevState;
 
-    public DirectorScript()
+    public void Awake()
     {
+        var soundEffectManager = FindFirstObjectByType<SoundEffectManager>();
+        if (soundEffectManager == null)
+            Debug.LogWarning("SoundEffectManager not found in scene. Assign it in the Inspector.", this);
+
         EndExperienceState = new EndExperienceState(this, InitialState);
         EndSpaceState = new EndSpaceState(this, EndExperienceState);
         SpaceWeirdnessState = new SpaceWeirdnessState(this, EndSpaceState);
         SpaceExperienceState = new SpaceExperienceState(this, SpaceWeirdnessState);
         TimeLapseState = new TimeLapseState(this, SpaceExperienceState);
         StartExperienceState = new StartExperienceState(this, TimeLapseState);
-        InitialState = new InitialState(this, StartExperienceState);
+        InitialState = new InitialState(this, StartExperienceState, soundEffectManager);
         (EndExperienceState as EndExperienceState).SetNextState(InitialState);
     }
          
