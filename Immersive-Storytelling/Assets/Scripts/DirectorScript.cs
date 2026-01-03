@@ -20,11 +20,13 @@ public class DirectorScript : MonoBehaviour
     private State _currentState;
     private State _prevState;
 
+    private SoundEffectManager SoundEffectManager;
+    private DayNightCycle DayNightCycle;
+
     public void Awake()
     {
-        var soundEffectManager = FindFirstObjectByType<SoundEffectManager>();
-        if (soundEffectManager == null)
-            Debug.LogWarning("SoundEffectManager not found in scene. Assign it in the Inspector.", this);
+        SoundEffectManager = FindFirstObjectByType<SoundEffectManager>();
+        DayNightCycle = FindFirstObjectByType<DayNightCycle>();
 
         EndExperienceState = new EndExperienceState(this, InitialState);
         EndSpaceState = new EndSpaceState(this, EndExperienceState);
@@ -32,14 +34,25 @@ public class DirectorScript : MonoBehaviour
         SpaceExperienceState = new SpaceExperienceState(this, SpaceWeirdnessState);
         TimeLapseState = new TimeLapseState(this, SpaceExperienceState);
         StartExperienceState = new StartExperienceState(this, TimeLapseState);
-        InitialState = new InitialState(this, StartExperienceState, soundEffectManager);
+        InitialState = new InitialState(this, StartExperienceState);
         (EndExperienceState as EndExperienceState).SetNextState(InitialState);
     }
          
     private void Start()
     {
         _currentState = InitialState;
+
+        _currentState.Entry += () => Debug.Log($"{_currentState}");
+
         InitialState.Entry += () => Debug.Log("State 1");
+        InitialState.Entry += () => SoundEffectManager.PlaySong("Nature", 1f, true);
+        
+        TimeLapseState.Entry += () => DayNightCycle.StartSpeedUp();
+        TimeLapseState.Entry += () => SoundEffectManager.PlaySong("DayNight", 0.15f);
+        TimeLapseState.Entry += () => SoundEffectManager.PlayVoice("DayNightVoice", 0.35f);
+
+        //SpaceExperienceState.Entry += () => breakFloorDelegate();
+        SpaceExperienceState.Entry += () => SoundEffectManager.PlayVoice("SpaceVoice", 0.35f);
     }
 
     private void Update()

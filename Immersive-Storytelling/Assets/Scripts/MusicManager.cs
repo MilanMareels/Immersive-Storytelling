@@ -4,12 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundEffectManager : MonoBehaviour
 {
-    [SerializeField] private string[] musicKeys = new string[0];
-    [SerializeField] private AudioClip[] musicClips = new AudioClip[0];
+    [SerializeField] private string[] soundKeys = new string[0];
+    [SerializeField] private AudioClip[] soundClips = new AudioClip[0];
 
-    public Dictionary<string, AudioClip> MusicSources;
+    public Dictionary<string, AudioClip> SoundSources;
     private AudioSource musicPlayer;
-    private AudioSource musicPlayer2;
+    private AudioSource voicePlayer;
 
     private void Awake()
     {
@@ -20,15 +20,13 @@ public class SoundEffectManager : MonoBehaviour
             musicPlayer = sources[0];
 
         if (sources.Length >= 2)
-            musicPlayer2 = sources[1];
+            voicePlayer = sources[1];
         else
-            musicPlayer2 = gameObject.AddComponent<AudioSource>();
+            voicePlayer = gameObject.AddComponent<AudioSource>();
 
         musicPlayer.playOnAwake = false;
-        musicPlayer.loop = false;
 
-        musicPlayer2.playOnAwake = false;
-        musicPlayer2.loop = true;
+        voicePlayer.playOnAwake = false;
 
         BuildDictionaryFromArrays();
     }
@@ -42,28 +40,37 @@ public class SoundEffectManager : MonoBehaviour
         
     }
 
-    public void PlaySong(string music, float volume1 = 1f, string music2 = "", float volume2 = 1f)
+    public void PlaySong(
+        string name,
+        float volume,
+        bool loop = false)
     {
-        if (MusicSources == null || !MusicSources.ContainsKey(music))
+        if (SoundSources == null || !SoundSources.ContainsKey(name))
         {
-            Debug.LogError("First music clip not found");
+            Debug.LogError("Music clip not found");
             return;
         }
-        musicPlayer.clip = MusicSources[music];
-        musicPlayer.volume = volume1;
+        musicPlayer.clip = SoundSources[name];
+        musicPlayer.volume = volume;
+        musicPlayer.loop = loop;
         musicPlayer.Play();
-        if (music2 == "")
+        
+    }
+
+    public void PlayVoice(
+        string name,
+        float volume,
+        bool loop = false)
+    {
+        if (SoundSources == null || !SoundSources.ContainsKey(name))
         {
+            Debug.LogError("Voice clip not found");
             return;
         }
-        else if (!MusicSources.ContainsKey(music2))
-        {
-            Debug.LogError("Second music clip not found");
-            return;
-        }
-        musicPlayer2.clip = MusicSources[music2];
-        musicPlayer2.volume = (float)volume2;
-        musicPlayer2.Play();
+        voicePlayer.clip = SoundSources[name];
+        voicePlayer.volume = volume;
+        voicePlayer.loop = loop;
+        voicePlayer.Play();
     }
 
     public void Stop()
@@ -73,16 +80,16 @@ public class SoundEffectManager : MonoBehaviour
 
     private void BuildDictionaryFromArrays()
     {
-        MusicSources = new Dictionary<string, AudioClip>(musicKeys.Length);
-        int count = Mathf.Min(musicKeys.Length, musicClips.Length);
+        SoundSources = new Dictionary<string, AudioClip>(soundKeys.Length);
+        int count = Mathf.Min(soundKeys.Length, soundClips.Length);
 
-        if (musicKeys.Length != musicClips.Length)
-            Debug.LogWarning("musicKeys and musicClips length mismatch. Extra items will be ignored.");
+        if (soundKeys.Length != soundClips.Length)
+            Debug.LogWarning("soundKeys and soundClips length mismatch. Extra items will be ignored.");
 
         for (int i = 0; i < count; i++)
         {
-            var key = musicKeys[i];
-            var clip = musicClips[i];
+            var key = soundKeys[i];
+            var clip = soundClips[i];
             if (string.IsNullOrEmpty(key))
             {
                 Debug.LogWarning($"Empty key at index {i} ignored.");
@@ -93,13 +100,13 @@ public class SoundEffectManager : MonoBehaviour
                 Debug.LogWarning($"Null clip for key '{key}' at index {i} ignored.");
                 continue;
             }
-            if (MusicSources.ContainsKey(key))
+            if (SoundSources.ContainsKey(key))
             {
                 Debug.LogWarning($"Duplicate key '{key}' at index {i} ignored.");
                 continue;
             }
 
-            MusicSources.Add(key, clip);
+            SoundSources.Add(key, clip);
         }
     }
 }

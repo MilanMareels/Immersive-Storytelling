@@ -11,7 +11,7 @@ public class DayNightCycle : MonoBehaviour
     public Material NightSkyboxMaterial;
     private Light sun;
     private bool isDay;
-    public Light StaticLight;
+    //public Light StaticLight;
     public float SpeedUpDelay = 10;
     public float SlowDownDelay = 10;
     private float delta = 0f;
@@ -39,7 +39,7 @@ public class DayNightCycle : MonoBehaviour
         director.TimeLapseState.Entry += () =>
         {
             enabled = true;
-            StaticLight.enabled = false;
+            //StaticLight.enabled = false;
         };
 
         director.TimeLapseState.Update += () =>
@@ -50,7 +50,7 @@ public class DayNightCycle : MonoBehaviour
         director.TimeLapseState.Exit += () =>
         {
             enabled = false;
-            StaticLight.enabled = true;
+            //StaticLight.enabled = true;
         };
     }
 
