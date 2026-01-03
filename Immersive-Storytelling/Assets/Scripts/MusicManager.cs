@@ -9,11 +9,32 @@ public class SoundEffectManager : MonoBehaviour
 
     public Dictionary<string, AudioClip> MusicSources;
     private AudioSource musicPlayer;
+    private AudioSource sfxPlayer;
+
+    private void Awake()
+    {
+        var sources = GetComponents<AudioSource>();
+        if (sources.Length == 0)
+            musicPlayer = gameObject.AddComponent<AudioSource>();
+        else
+            musicPlayer = sources[0];
+
+        if (sources.Length >= 2)
+            sfxPlayer = sources[1];
+        else
+            sfxPlayer = gameObject.AddComponent<AudioSource>();
+
+        musicPlayer.playOnAwake = false;
+        musicPlayer.loop = false;
+
+        sfxPlayer.playOnAwake = false;
+        sfxPlayer.loop = true;
+
+        BuildDictionaryFromArrays();
+    }
 
     private void Start()
     {
-        musicPlayer = GetComponent<AudioSource>();
-        BuildDictionaryFromArrays();
     }
 
     private void Update()
@@ -21,7 +42,7 @@ public class SoundEffectManager : MonoBehaviour
         
     }
 
-    public void PlaySong(string name)
+    public void PlaySong(string name, float volume, string? name2, float? sfxVolume)
     {
         if (MusicSources == null || !MusicSources.ContainsKey(name))
         {
@@ -29,7 +50,14 @@ public class SoundEffectManager : MonoBehaviour
             return;
         }
         musicPlayer.clip = MusicSources[name];
+        musicPlayer.volume = volume;
         musicPlayer.Play();
+        if (name2 != null && MusicSources.ContainsKey(name2) && sfxVolume != null)
+        {
+            sfxPlayer.clip = MusicSources[name2];
+            sfxPlayer.volume = (float)sfxVolume;
+            sfxPlayer.Play();
+        }
     }
 
     public void Stop()
