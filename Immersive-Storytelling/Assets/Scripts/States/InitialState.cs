@@ -14,6 +14,6 @@ public class InitialState : State
     public override void OnEntry()
     {
         base.OnEntry();
-        _sound.PlaySong("Nature", 1f, "SpaceVoice", 0.25f);
+        _sound.PlaySong("Nature");
     }
 }
