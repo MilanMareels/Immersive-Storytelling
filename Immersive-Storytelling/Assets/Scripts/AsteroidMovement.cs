@@ -33,6 +33,7 @@ public class AsteroidMovement : MonoBehaviour
         if (fallSound != null)
         {
             audioSource.clip = fallSound;
+            audioSource.volume = 0.3f;
             audioSource.Play();
         }
     }

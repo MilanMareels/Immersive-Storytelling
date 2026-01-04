@@ -7,11 +7,15 @@ public class FloorScript : MonoBehaviour
     void Start()
     {
         _Animator = gameObject.GetComponent<Animator>();
-        FindFirstObjectByType<DirectorScript>().breakFloorDelegate += StartBreak;
     }
 
-    void StartBreak()
+    public void StartBreak()
     {
         _Animator.Play("floor_animation");
+    }
+
+    public void ReverseBreak()
+    {
+        _Animator.Play("floor_animation_reverse");
     }
 }

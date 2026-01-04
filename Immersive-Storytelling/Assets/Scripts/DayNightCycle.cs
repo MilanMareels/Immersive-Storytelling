@@ -14,7 +14,7 @@ public class DayNightCycle : MonoBehaviour
     //public Light StaticLight;
     public float SpeedUpDelay = 10;
     public float SlowDownDelay = 10;
-    private float delta = 0f;
+    //private float delta = 0f;
 
     private CycleState state = CycleState.Slow;
     private float cycleTransitionDelta = 0f;
@@ -36,16 +36,21 @@ public class DayNightCycle : MonoBehaviour
 
         var director = FindFirstObjectByType<DirectorScript>();
 
+        director.InitialState.Entry += () =>
+        {
+            enabled = false;
+        };
+
         director.TimeLapseState.Entry += () =>
         {
             enabled = true;
             //StaticLight.enabled = false;
         };
 
-        director.TimeLapseState.Update += () =>
-        {
-            delta += Time.deltaTime;
-        };
+        //director.TimeLapseState.Update += () =>
+        //{
+        //    delta += Time.deltaTime;
+        //};
 
         director.TimeLapseState.Exit += () =>
         {
@@ -98,17 +103,17 @@ public class DayNightCycle : MonoBehaviour
         sun.intensity = timeFactor;
         RenderSettings.reflectionIntensity = timeFactor;
 
-        if (delta > SpeedUpDelay)
-        {
-            StartSpeedUp();
-        }
+        //if (delta > SpeedUpDelay)
+        //{
+        //    StartSpeedUp();
+        //}
     }
 
     public void StartSpeedUp()
     {
         if (state != CycleState.Slow)
         {
-            Debug.LogError("SpeedUp was called but cycle was not Slow at this time");
+            //Debug.LogError("SpeedUp was called but cycle was not Slow at this time");
             return;
         }
         state = CycleState.SpeedUp;

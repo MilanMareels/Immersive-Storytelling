@@ -12,7 +12,6 @@ public class StartExperienceState : State
     public override void OnEntry()
     {
         base.OnEntry();
-        Debug.Log("Here");
     }
 
     public override void OnUpdate()
