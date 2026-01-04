@@ -3129,6 +3129,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   DaySkyboxMaterial: {fileID: 2100000, guid: a30f8a30dc8cca04e82ea1d10bf9d88f, type: 2}
   NightSkyboxMaterial: {fileID: 2100000, guid: b5fde314ab090f04ba55b400f3c75f33, type: 2}
+  SpaceSkyboxMaterial: {fileID: 2100000, guid: 2d056ac30ecc9e542b26e06133f23602, type: 2}
   StaticLight: {fileID: 1100407623}
   SpeedUpDelay: 10
   SlowDownDelay: 10
