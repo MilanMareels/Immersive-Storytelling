@@ -9,9 +9,10 @@ public class DayNightCycle : MonoBehaviour
     public Gradient AmbientColors;
     public Material DaySkyboxMaterial;
     public Material NightSkyboxMaterial;
+    public Material SpaceSkyboxMaterial;
     private Light sun;
     private bool isDay;
-    //public Light StaticLight;
+    public Light StaticLight;
     public float SpeedUpDelay = 10;
     public float SlowDownDelay = 10;
     //private float delta = 0f;
@@ -38,13 +39,13 @@ public class DayNightCycle : MonoBehaviour
 
         director.InitialState.Entry += () =>
         {
+            StaticLight.enabled = false;
             enabled = false;
         };
 
-        director.TimeLapseState.Entry += () =>
+        director.StartExperienceState.Entry += () =>
         {
             enabled = true;
-            //StaticLight.enabled = false;
         };
 
         //director.TimeLapseState.Update += () =>
@@ -54,8 +55,24 @@ public class DayNightCycle : MonoBehaviour
 
         director.TimeLapseState.Exit += () =>
         {
+            StaticLight.enabled = true;
+            RenderSettings.reflectionIntensity = 0.566f;
+            RenderSettings.skybox = SpaceSkyboxMaterial;
             enabled = false;
-            //StaticLight.enabled = true;
+        };
+
+        director.SpaceWeirdnessState.Exit += () =>
+        {
+            enabled = true;
+            StaticLight.enabled = false;
+            RenderSettings.skybox = DaySkyboxMaterial;
+            state = CycleState.Fast;
+            StartSlowDown();
+        };
+
+        director.EndSpaceState.Exit += () =>
+        {
+            enabled = false;
         };
     }
 

@@ -25,6 +25,8 @@ public class DirectorScript : MonoBehaviour
     private AsteroidSpawner AsteroidSpawner;
     private FloorScript FloorScript;
     private ObjectFallScript ObjectFallScript;
+
+    public GameObject equations;
     public void Awake()
     {
         SoundEffectManager = FindFirstObjectByType<SoundEffectManager>();
@@ -50,7 +52,8 @@ public class DirectorScript : MonoBehaviour
         _currentState.Entry += () => Debug.Log($"{_currentState}");
 
         InitialState.Entry += () => SoundEffectManager.PlaySong("Nature", 1f, true);
-        
+        InitialState.Entry += () => equations.SetActive(false);
+
         TimeLapseState.Entry += () => DayNightCycle.StartSpeedUp();
         TimeLapseState.Entry += () => SoundEffectManager.PlaySong("DayNight", 0.15f, true);
         TimeLapseState.Entry += () => SoundEffectManager.PlayVoice("DayNightVoice", 0.35f);
@@ -62,9 +65,12 @@ public class DirectorScript : MonoBehaviour
         SpaceExperienceState.Entry += () => SoundEffectManager.PlayVoice("SpaceVoice", 0.35f);
         SpaceExperienceState.Entry += () => AsteroidSpawner.SpawnAsteroid();
 
+        SpaceWeirdnessState.Entry += () => equations.SetActive(true);
+
         EndSpaceState.Entry += () => FloorScript.ReverseBreak();
         EndSpaceState.Entry += () => ObjectFallScript.ReverseFall();
-        EndSpaceState.Entry += () => SoundEffectManager.PlayVoice("LoopVoice", 0.2f, true);
+        EndSpaceState.Entry += () => SoundEffectManager.PlayVoice("LoopVoice", 0.2f);
+        EndSpaceState.Entry += () => equations.SetActive(false);
     }
 
     private void Update()

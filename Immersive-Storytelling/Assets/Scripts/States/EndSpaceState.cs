@@ -20,6 +20,7 @@ public class EndSpaceState : State
         if (_delta > 25f)
         {
             Transition();
+            _delta = 0f;
         }
     }
 }

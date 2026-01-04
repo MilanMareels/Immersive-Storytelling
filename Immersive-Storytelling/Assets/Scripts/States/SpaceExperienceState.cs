@@ -17,9 +17,10 @@ public class SpaceExperienceState : State
     {
         base.OnUpdate();
         _delta += Time.deltaTime;
-        if (_delta > 55f)
+        if (_delta > 13f)
         {
             Transition();
+            _delta = 0f;
         }
     }
 }

@@ -20,6 +20,8 @@ public class AsteroidMovement : MonoBehaviour
     private float swayOffset;
     private Camera mainCam;
 
+    private float _delta = 0f;
+
     void Start()
     {
         direction = direction.normalized;
@@ -48,5 +50,11 @@ public class AsteroidMovement : MonoBehaviour
 
         transform.Translate(velocity * Time.deltaTime, Space.World);
         transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
+        _delta += Time.deltaTime;
+
+        if (_delta > 20f)
+        {
+            Destroy(gameObject);
+        }
     }
 }

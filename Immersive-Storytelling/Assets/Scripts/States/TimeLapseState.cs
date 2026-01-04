@@ -21,6 +21,7 @@ public class TimeLapseState : State
         if (_delta > 45f)
         {
             Transition();
+            _delta = 0f;
         }
     }
 }

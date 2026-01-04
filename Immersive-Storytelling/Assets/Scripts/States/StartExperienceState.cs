@@ -22,6 +22,7 @@ public class StartExperienceState : State
         if (_delta > 5f)
         {
             Transition();
+            _delta = 0f;
         }
     }
 }
