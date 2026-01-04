@@ -54,6 +54,12 @@ public class DirectorScript : MonoBehaviour
         InitialState.Entry += () => SoundEffectManager.PlaySong("Nature", 1f, true);
         InitialState.Entry += () => equations.SetActive(false);
 
+        StartExTrigger triggerScript = FindFirstObjectByType<StartExTrigger>();
+        if (triggerScript != null)
+        {
+            InitialState.Entry += () => triggerScript.ResetTrigger();
+        }
+
         TimeLapseState.Entry += () => DayNightCycle.StartSpeedUp();
         TimeLapseState.Entry += () => SoundEffectManager.PlaySong("DayNight", 0.15f, true);
         TimeLapseState.Entry += () => SoundEffectManager.PlayVoice("DayNightVoice", 0.35f);

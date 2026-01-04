@@ -24,4 +24,9 @@ public class StartExTrigger : MonoBehaviour
            directorScript.NextState();
         _enabled = false;
     }
+
+    public void ResetTrigger()
+    {
+        _enabled = true;
+    }
 }
